@@ -16,8 +16,9 @@ mongoose
   .catch((error) => console.error("❌ Error:", error));
 
 // Import models
-const Task = require("./models/Task");
+
 const Session = require("./models/Session");
+const Expense = require("./models/Expense");
 
 // Root route
 app.get("/", (req, res) => {
@@ -25,23 +26,23 @@ app.get("/", (req, res) => {
     message: "FocusTools API",
     status: "Running",
     endpoints: {
-      tasks: "/api/tasks",
+      expenses: "/api/expenses",
       sessions: "/api/sessions",
     },
   });
 });
 
 
-app.post("/api/tasks", async (req, res) => {
+app.post("/api/expenses", async (req, res) => {
   try {
     
-    const newTask = new Task(req.body);
+    const newExpense = new Expense(req.body);
 
     // Save to database
-    const savedTask = await newTask.save();
+    const savedExpense = await newExpense.save();
 
     
-    res.status(201).json(savedTask);
+    res.status(201).json(savedExpense);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -49,34 +50,34 @@ app.post("/api/tasks", async (req, res) => {
 
 
 
-app.get("/api/tasks", async (req, res) => {
+app.get("/api/expenses", async (req, res) => {
   try {
-    const tasks = await Task.find();
-    res.json(tasks);
+    const expense = await Expense.find();
+    res.json(expense);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-app.get("/api/tasks/:id", async (req, res) => {
+app.get("/api/expenses/:id", async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const expense = await Expense.findById(req.params.id);
 
-    if (!task) {
+    if (!expense) {
       return res.status(404).json({
-        message: "Task not found",
+        message: "Expense not found",
       });
     }
-    res.json(task);
+    res.json(expense);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 
-app.put("/api/tasks/:id", async (req, res) => {
+app.put("/api/expense/:id", async (req, res) => {
   try {
-    const updatedTask = await Task.findByIdAndUpdate(
+    const updatedExpense = await Expense.findByIdAndUpdate(
       req.params.id, 
       req.body, 
       {
@@ -85,32 +86,32 @@ app.put("/api/tasks/:id", async (req, res) => {
       }
     );
 
-    if (!updatedTask) {
+    if (!updatedExpense) {
       return res.status(404).json({
-        message: "Task not found",
+        message: "Expense not found",
       });
     }
 
-    res.json(updatedTask);
+    res.json(updatedExpense);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
 
-app.delete("/api/tasks/:id", async (req, res) => {
+app.delete("/api/expense/:id", async (req, res) => {
   try {
-    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+    const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
 
-    if (!deletedTask) {
+    if (!deletedExpense) {
       return res.status(404).json({
-        message: "Task not found",
+        message: "Expense not found",
       });
     }
 
     res.json({
-      message: "Task deleted successfully",
-      Task: deletedTask,
+      message: "Expense deleted successfully",
+      Expense: deletedExpense,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -137,7 +138,7 @@ app.post("/api/sessions", async (req, res) => {
 
 app.get("/api/sessions", async (req, res) => {
   try {
-    const sessions = await Session.find().populate('taskId');
+    const sessions = await Session.find().populate('expenseId');
     
     res.json(sessions);
   } catch (error) {
