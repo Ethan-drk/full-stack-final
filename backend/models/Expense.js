@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// TODO: Define your Task schema here
 const expenseSchema = new mongoose.Schema(
   {
      title: {

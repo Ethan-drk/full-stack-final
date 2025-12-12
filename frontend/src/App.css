@@ -1,4 +1,4 @@
-/* Reset and basic styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -15,13 +15,13 @@ body {
 .app {
   display: flex;
   flex-direction: column;
-  align-items: center;    /* horizontally center header & wrapper */
+  align-items: center;    
   padding: 2rem;
   max-width: 100%;
   margin: 0 auto;
 }
 
-/* Header */
+
 header {
   text-align: center;
   margin-bottom: 2rem;
@@ -37,7 +37,7 @@ header p {
   color: #f0f0f0;
 }
 
-/* Error Banner */
+
 .error-banner {
   background: #ff5e5e;
   color: white;
@@ -58,7 +58,7 @@ header p {
   cursor: pointer;
 }
 
-/* Main Content Wrapper */
+
 .main-content {
   width: 100%;
   display: flex;
@@ -74,8 +74,8 @@ header p {
   width: 100%;
 }
 
-/* Task Section */
-.task-section {
+
+.expense-section {
   flex: 0 0 600px; 
   display: flex;
   flex-direction: column;
@@ -86,8 +86,8 @@ header p {
   min-height: 450px;
 }
 
-/* Add Task Form */
-.add-task-form {
+
+.add-expense-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -95,7 +95,7 @@ header p {
   margin-bottom: 1.5rem;
 }
 
-.add-task-form input {
+.add-expense-form input {
   width: 100%;
   padding: 0.75rem;
   border: 2px solid #ccc;
@@ -103,7 +103,7 @@ header p {
   font-size: 1rem;
 }
 
-.add-task-form input:focus {
+.add-expense-form input:focus {
   border-color: #4a90e2;
   outline: none;
 }
@@ -123,8 +123,8 @@ header p {
   background: #357ab8;
 }
 
-/* Task List */
-.task-list {
+
+.expense-list {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -138,8 +138,8 @@ header p {
   padding: 2rem;
 }
 
-/* Task Item */
-.task-item {
+
+.expense-item {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -150,16 +150,16 @@ header p {
   transition: all 0.2s;
 }
 
-.task-item:hover {
+.expense-item:hover {
   border-color: #4a90e2;
   background: #f0f4ff;
 }
 
-.task-content {
+.expense-content {
   flex: 1;
 }
 
-.task-title {
+.expense-title {
   font-size: 1rem;
   margin-bottom: 0.25rem;
 }
@@ -176,10 +176,10 @@ header p {
   opacity: 1;
 }
 
-/* Timer Section */
+
 .timer-section {
-  flex: 1; /* take remaining space */
-  min-width: 400px; /* ensure it doesn’t shrink too small */
+  flex: 1; 
+  min-width: 400px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -190,28 +190,28 @@ header p {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Chart container */
+
 .chart-container {
   width: 100%;
   height: 100%;
   border-radius: 12px;
 }
 
-/* Scrollbar styling */
-.task-list::-webkit-scrollbar {
+
+.expense-list::-webkit-scrollbar {
   width: 8px;
 }
 
-.task-list::-webkit-scrollbar-thumb {
+.expense-list::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 4px;
 }
 
-.task-list::-webkit-scrollbar-thumb:hover {
+.expense-list::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
 
-/* Responsive */
+
 @media (max-width: 1024px) {
   .columns-wrapper {
     flex-direction: column;
@@ -219,7 +219,7 @@ header p {
     gap: 1.5rem;
   }
 
-  .task-section, .timer-section {
+  .expense-section, .timer-section {
     width: 100%;
     min-width: 0;
   }

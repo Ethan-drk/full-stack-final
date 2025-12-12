@@ -1,7 +1,7 @@
 //import Expense from '../../../backend/models/Expense';
-import TaskItem from './TaskItem';
+import ExpenseItem from './ExpenseItem';
 
-function TaskList({ expenses, onDeleteExpense }) {
+function ExpenseList({ expenses, onDeleteExpense }) {
   if (expenses.length === 0) {
     return (
       <div className="empty-state">
@@ -11,9 +11,9 @@ function TaskList({ expenses, onDeleteExpense }) {
   }
 
   return (
-    <div className="task-list">
+    <div className="expense-list">
       {expenses.map((expense) => (
-        <TaskItem
+        <ExpenseItem
           key={expense._id}
           expense={expense}
           onDelete={() => onDeleteExpense(expense._id)}
@@ -23,4 +23,4 @@ function TaskList({ expenses, onDeleteExpense }) {
   );
 }
 
-export default TaskList;
+export default ExpenseList;

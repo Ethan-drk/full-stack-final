@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import {TypeChart} from "./components/TypeChart";
 import './App.css';
-import TaskList from './components/TaskList';
+import ExpenseList from './components/ExpenseList';
 //import { getExpenses, createExpense, updateExpenses, deleteExpense } from './api/Expenses';
 import { getExpenses, getTotals, createExpense, deleteExpense } from './api/Expenses';
 
@@ -34,14 +34,9 @@ function App() {
   const [error, setError] = useState(null);
   const [chartData, setChartData] = useState({labels: [],datasets: []})
 
-  // Load tasks from database on mount
   useEffect(() => {
     loadExpenses();
   }, []);
-
-  /**
-   * Fetch all tasks from backend
-   */
   const loadExpenses = async () => {
     try {
       setLoading(true);
@@ -49,8 +44,8 @@ function App() {
       const data = await getExpenses();
       setExpenses(data);
     } catch (err) {
-      console.error('Error loading tasks:', err);
-      setError('Failed to load tasks. Make sure your backend is running.');
+      console.error('Error loading expenses:', err);
+      setError('Failed to load expenses. Make sure your backend is running.');
     } finally {
       setLoading(false);
     }
@@ -83,10 +78,9 @@ function App() {
 
     loadTotals();
   }, [expenses]);
-  /**
-   * Add a new task
-   */
-  const handleAddTask = async (e) => {
+  
+
+  const handleAddExpense = async (e) => {
     e.preventDefault();
   const amountPattern = /^\d+(\.\d{2})$/;
   if (!amountPattern.test(newExpenseAmount)) {
@@ -96,7 +90,7 @@ function App() {
     if (!newExpenseTitle.trim()) return;
 
     try {
-      // 1. Save to database via backend
+     
       const newExpense = await createExpense({ title: newExpenseTitle, type: newExpenseType, amount: newExpenseAmount});
       
       // 2. Update React state (add to beginning of list)
@@ -108,39 +102,30 @@ function App() {
       setNewExpenseAmount("");
       setError(null);
     } catch (err) {
-      console.error('Error creating task:', err);
-      setError('Failed to add task');
+      console.error('Error creating expense:', err);
+      setError('Failed to add expense');
     }
   };
 
   
 
-  /**
-   * Delete a task
-   */
-  const handleDeleteExpense = async (taskId) => {
+  const handleDeleteExpense = async (expenseId) => {
     try {
-      // 1. Delete from database
-      await deleteExpense(taskId);
+      await deleteExpense(expenseId);
       
-      // 2. Remove from React state
-      setExpenses(expenses.filter(t => t._id !== taskId));
+      setExpenses(expenses.filter(t => t._id !== expenseId));
       
-      // 3. Clear active task if it was deleted
-      if (activeExpense?._id === taskId) {
+      if (activeExpense?._id === expenseId) {
         setActiveExpense(null);
       }
     } catch (err) {
-      console.error('Error deleting task:', err);
-      setError('Failed to delete task');
+      console.error('Error deleting expense:', err);
+      setError('Failed to delete expense');
     }
   };
 
 
 
-
-
-  // Loading state
   if (loading) {
     return (
       <div className="app loading">
@@ -172,18 +157,18 @@ function App() {
       )}
 
       <div className="main-content">
-        {/* Left side: Task List */}
-        <div className="task-section">
+        
+        <div className="expense-section">
           <h2>Expenses</h2>
           
-          {/* Add Task Form */}
-          <form onSubmit={handleAddTask} className="add-task-form">
+          
+          <form onSubmit={handleAddExpense} className="add-expense-form">
             <input
               type="text"
               value={newExpenseTitle}
               onChange={(e) => setNewExpenseTitle(e.target.value)}
               placeholder="Name of Expense"
-              className="task-input"
+              className="expense-input"
             />
             <input
             type="text"
@@ -204,11 +189,9 @@ function App() {
             </button>
           </form>
 
-          {/* Task List */}
-          <TaskList
+          <ExpenseList
             expenses={expenses}
             activeExpense={activeExpense}
-            //onToggleComplete={handleToggleComplete}
             onDeleteExpense={handleDeleteExpense}
           />
         </div>

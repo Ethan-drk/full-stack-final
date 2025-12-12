@@ -1,9 +1,6 @@
-// Base URL for all API calls - change this for deployment
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-/**
- * Fetch all expense from backend
- */
+
 export const getExpenses = async () => {
   const response = await fetch(`${API_BASE_URL}/api/expenses`);
   if (!response.ok) {
@@ -19,10 +16,8 @@ export const getTotals = async () => {
   }
   return response.json();
 };
-/**
- * Create a new task
- * @param {Object} expenseData - { title: string }
- */
+
+
 export const createExpense = async (expenseData) => {
   const response = await fetch(`${API_BASE_URL}/api/expenses`, {
     method: 'POST',
@@ -37,11 +32,7 @@ export const createExpense = async (expenseData) => {
   return response.json();
 };
 
-/**
- * Update a task
- * @param {string} id - Task ID
- * @param {Object} updates - Fields to update
- */
+
 export const updateExpense = async (id, updates) => {
   const response = await fetch(`${API_BASE_URL}/api/expense/${id}`, {
     method: 'PUT',
@@ -56,10 +47,8 @@ export const updateExpense = async (id, updates) => {
   return response.json();
 };
 
-/**
- * Delete a task
- * @param {string} id - Task ID
- */
+
+ 
 export const deleteExpense = async (id) => {
   const response = await fetch(`${API_BASE_URL}/api/expense/${id}`, {
     method: 'DELETE',
