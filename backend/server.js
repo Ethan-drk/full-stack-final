@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN }));
+app.use(cors({ origin: process.env.CLIENT_ORIGIN}));
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)
