@@ -4,9 +4,9 @@ function TaskItem({expense, onSelect, onDelete }) {
 
       {/* Task content - clicking selects for Pomodoro */}
       <div className="task-content" onClick={onSelect}>
-        <h3 className="task-title">{expense.title}</h3>
-        <h3 className="task-title">{expense.type}</h3>
-        <h3 className="task-title">{expense.amount}</h3>
+        <h3 className="task-title">Expense: {expense.title}</h3>
+        <h3 className="task-title">Type: {expense.type}</h3>
+        <h3 className="task-title">${expense.amount}</h3>
         <div className="task-meta">
           {expense.pomodoroCount > 0 && (
             <span className="pomodoro-badge">

@@ -88,6 +88,11 @@ function App() {
    */
   const handleAddTask = async (e) => {
     e.preventDefault();
+  const amountPattern = /^\d+(\.\d{2})$/;
+  if (!amountPattern.test(newExpenseAmount)) {
+    setError("Amount must be in the format $xx.xx ");
+    return;
+  }
     if (!newExpenseTitle.trim()) return;
 
     try {
@@ -108,30 +113,7 @@ function App() {
     }
   };
 
-  /**
-   * Toggle task completion
-   
-  const handleToggleComplete = async (taskId) => {
-    try {
-      // Find the task to get current completion status
-      const task = expenses.find(t => t._id === taskId);
-      
-      // 1. Update in database
-      const updatedTask = await updateExpenses(taskId, { 
-        completed: !task.completed 
-      });
-      
-      // 2. Update in React state
-      setExpenses(expenses.map(t => 
-        t._id === taskId ? updatedTask : t
-      ));
-    } catch (err) {
-      console.error('Error toggling task:', err);
-      setError('Failed to update task');
-    }
-  };
-*/
-
+  
 
   /**
    * Delete a task
@@ -163,16 +145,23 @@ function App() {
     return (
       <div className="app loading">
         <div className="spinner"></div>
-        <p>Loading tasks...</p>
+        <p>Loading expenses...</p>
       </div>
     );
   }
 
+
+  const today = new Date();
+  const month = today.getMonth()+1;
+  const year = today.getFullYear();
+  const date = today. getDate();
+  const currentDate = month + "/" + date + "/" + year;
+
   return (
     <div className="app">
       <header>
-        <h1>🍅 FocusTools</h1>
-        <p>Pomodoro Timer + Task Manager</p>
+        <h1>Expense tracker</h1>
+        <p>Today is {currentDate}</p>
       </header>
 
       {error && (
@@ -185,7 +174,7 @@ function App() {
       <div className="main-content">
         {/* Left side: Task List */}
         <div className="task-section">
-          <h2>Tasks</h2>
+          <h2>Expenses</h2>
           
           {/* Add Task Form */}
           <form onSubmit={handleAddTask} className="add-task-form">
@@ -193,7 +182,7 @@ function App() {
               type="text"
               value={newExpenseTitle}
               onChange={(e) => setNewExpenseTitle(e.target.value)}
-              placeholder="What do you need to focus on?"
+              placeholder="Name of Expense"
               className="task-input"
             />
             <input
@@ -211,7 +200,7 @@ function App() {
             />
 
             <button type="submit" className="add-button">
-              Add Task
+              Add Expense
             </button>
           </form>
 
