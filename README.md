@@ -145,4 +145,7 @@ I also used it for this line which forces the amount of money to be imputed in t
 
 const amountPattern = /^\d+(\.\d{2})$/;
 
+this is a regular the d+ means 1 or mor digits, and the \.\d{2} means a decimal point followed by two more digits
+
+
 Most of the issues I had I could find answers for on the internet so I did not need to use a lot of ai.
