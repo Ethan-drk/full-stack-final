@@ -11,7 +11,7 @@ export const TypeChart = ({ chartData }) => {
           plugins: {
             title: {
               display: true,
-              text: "Amount of Expenses by Type",
+              text: "Total Money Spent on this Category ",
             },
             legend: {
               display: false,
