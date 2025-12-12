@@ -2,12 +2,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  align-items: center;
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  
 }
 
 .app {
@@ -75,10 +77,10 @@ header p {
   cursor: pointer;
 }
 
+
 .main-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  display: flex;           
+  gap: 2rem;              
 }
 
 @media (max-width: 768px) {
@@ -311,4 +313,20 @@ header p {
   height: 100%;
   background: #667eea;
   transition: width 1s linear;
+}
+
+.timer-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-items: center; 
+  width: 100%;        
+  height: 400px;  
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;     
+  background: white;
+  border-radius: 12px;
 }

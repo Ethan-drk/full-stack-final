@@ -1,11 +1,28 @@
 import { useState, useEffect } from 'react';
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import BarChart from "components/BarChart";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import {TypeChart} from "./components/TypeChart";
 import './App.css';
 import TaskList from './components/TaskList';
 //import { getExpenses, createExpense, updateExpenses, deleteExpense } from './api/Expenses';
-import { getExpenses, createExpense, deleteExpense } from './api/Expenses';
+import { getExpenses, getTotals, createExpense, deleteExpense } from './api/Expenses';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  ArcElement,
+  Tooltip,
+  Legend
+);
+
 function App() {
   // State management
   const [expenses, setExpenses] = useState([]);
@@ -15,6 +32,7 @@ function App() {
   const [newExpenseAmount, setNewExpenseAmount] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [chartData, setChartData] = useState({labels: [],datasets: []})
 
   // Load tasks from database on mount
   useEffect(() => {
@@ -38,6 +56,33 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    async function loadTotals() {
+      try {
+        const totals = await getTotals(); 
+
+        const labels = totals.map(t => t.type);
+        const amounts = totals.map(t => t.totalAmount);
+
+        setChartData({
+          labels: labels,
+          datasets: [
+            {
+              label: "Expenses by Category",
+              data: amounts,
+              backgroundColor: "rgba(75, 192, 192, 0.6)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1
+            }
+          ]
+        });
+      } catch (err) {
+        console.error("Error loading chart data:", err);
+      }
+    }
+
+    loadTotals();
+  }, [expenses]);
   /**
    * Add a new task
    */
@@ -110,6 +155,9 @@ function App() {
   };
 
 
+
+
+
   // Loading state
   if (loading) {
     return (
@@ -172,9 +220,12 @@ function App() {
             expenses={expenses}
             activeExpense={activeExpense}
             //onToggleComplete={handleToggleComplete}
-            onDeleteTask={handleDeleteExpense}
+            onDeleteExpense={handleDeleteExpense}
           />
         </div>
+        <div className="timer-section">
+      <TypeChart chartData={chartData} />
+    </div>
       </div>
     </div>
   );

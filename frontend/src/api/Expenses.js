@@ -12,6 +12,13 @@ export const getExpenses = async () => {
   return response.json();
 };
 
+export const getTotals = async () => {
+  const response = await fetch(`${API_URL}/api/expenses/totals`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch expense');
+  }
+  return response.json();
+};
 /**
  * Create a new task
  * @param {Object} expenseData - { title: string }
